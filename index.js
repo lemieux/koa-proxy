@@ -130,11 +130,11 @@ function ignoreQuery(url) {
 
 function getParsedBody(ctx){
   var body = ctx.request.body;
-  if (body === undefined || body === null){
+  if (body === undefined || body === null || ctx.request.header['content-type'].startsWith('multipart/form-data')){
     return undefined;
   }
   var contentType = ctx.request.header['content-type'];
-  if (!Buffer.isBuffer(body) && typeof body !== 'string' && !ctx.request.header['content-type'].startsWith('multipart/form-data')){
+  if (!Buffer.isBuffer(body) && typeof body !== 'string'){
     if (contentType && contentType.indexOf('json') !== -1){
       body = JSON.stringify(body);
     } else {
