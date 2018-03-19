@@ -134,7 +134,7 @@ function getParsedBody(ctx){
     return undefined;
   }
   var contentType = ctx.request.header['content-type'];
-  if (!Buffer.isBuffer(body) && typeof body !== 'string'){
+  if (!Buffer.isBuffer(body) && typeof body !== 'string' && !this.request.header['content-type'].startsWith('multipart/form-data')){
     if (contentType && contentType.indexOf('json') !== -1){
       body = JSON.stringify(body);
     } else {
