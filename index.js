@@ -39,7 +39,7 @@ module.exports = function(options) {
         return yield* next;
       }
     }
-    
+
     var parsedBody = getParsedBody(this);
 
     var opt = {
@@ -70,7 +70,7 @@ module.exports = function(options) {
 
     var requestThunk = request(opt);
 
-    if (parsedBody) {
+    if (parsedBody && !this.request.header['content-type'].startsWith('multipart/form-data')) {
       var res = yield requestThunk;
     } else {
       // Is there a better way?
