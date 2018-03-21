@@ -75,7 +75,8 @@ module.exports = function(options) {
 
     var requestThunk = request(opt);
 
-    if (parsedBody && !this.request.header['content-type'].startsWith('multipart/form-data')) {
+    const contentType = this.request.header['content-type'];
+    if (parsedBody && (!contentType || !contentType.startsWith('multipart/form-data'))) {
       var res = yield requestThunk;
     } else {
       // Is there a better way?
